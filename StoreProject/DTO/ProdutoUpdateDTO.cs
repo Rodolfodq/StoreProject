@@ -1,8 +1,7 @@
 ﻿namespace StoreProject.DTO
 {
     public class ProdutoUpdateDTO
-    {        
-        public int IdProduto { get; set; }
+    {
         public string Nome { get; set; }
         public string Imagem { get; set; }
         public string Descricao { get; set; }

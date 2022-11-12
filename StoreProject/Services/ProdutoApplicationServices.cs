@@ -78,11 +78,11 @@ namespace StoreProject.Services
             }
         }
 
-        public async Task<bool> UpdateProduto(ProdutoUpdateDTO produtoDto)
+        public async Task<bool> UpdateProduto(int id, ProdutoUpdateDTO produtoDto)
         {
             try
             {
-                Produto produto = await _context.Produtos.Where(x => x.IdProduto == produtoDto.IdProduto).FirstOrDefaultAsync();
+                Produto produto = await _context.Produtos.Where(x => x.IdProduto == id).FirstOrDefaultAsync();
                 if (produto == null)
                     return false;
 

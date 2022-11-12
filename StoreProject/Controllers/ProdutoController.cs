@@ -39,10 +39,10 @@ namespace StoreProject.Controllers
             return CreatedAtRoute(nameof(GetProductById), new { Id = produtoReadDto.IdProduto }, produtoReadDto);
         }
 
-        [HttpPut("UpdateProduct")]
-        public async Task<IActionResult> UpdateProduct(ProdutoUpdateDTO produto)
+        [HttpPut("UpdateProduct/{id}")]
+        public async Task<IActionResult> UpdateProduct(int id, ProdutoUpdateDTO produto)
         {            
-            if (await _produtoApplicationServices.UpdateProduto(produto))
+            if (await _produtoApplicationServices.UpdateProduto(id, produto))
                 return NoContent();
             return NotFound("Produto não encontrado!");
         }

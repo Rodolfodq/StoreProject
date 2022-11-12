@@ -7,7 +7,7 @@ namespace StoreProject.Services
         Task<IEnumerable<ProdutoReadDTO>> GetAllProducts();
         Task<ProdutoReadDTO> GetProdutoById(int id);
         Task<ProdutoReadDTO> CreateProduto(ProdutoCreateDTO produto);
-        Task<bool> UpdateProduto(ProdutoUpdateDTO produto);
+        Task<bool> UpdateProduto(int id, ProdutoUpdateDTO produto);
         Task<bool> DeleteProduto(int id);
 
     }

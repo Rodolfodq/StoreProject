@@ -10,6 +10,7 @@ namespace StoreProject.Profiles
         {
             CreateMap<Produto, ProdutoReadDTO>();
             CreateMap<ProdutoCreateDTO, Produto>();
+            CreateMap<ProdutoUpdateDTO, Produto>();
         }
     }
 }

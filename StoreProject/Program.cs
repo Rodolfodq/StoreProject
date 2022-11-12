@@ -13,8 +13,6 @@ namespace StoreProject
             // Add services to the container.            
             builder.Services.AddScoped<IProdutoApplicationServices, ProdutoApplicationServices>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            //builder.Services.AddDbContext<AppDbContext>(opts =>
-            //opts.UseMySql(builder.Configuration.GetConnectionString("ProdutoConnection")));
             builder.Services.AddDbContext<AppDbContext>(opts =>
                 opts.UseMySql(builder.Configuration.GetConnectionString("ProdutoConnection"), new MySqlServerVersion(new Version())));
 

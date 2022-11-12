@@ -16,14 +16,39 @@ namespace StoreProject.Services
             _context = context;
             _mapper = mapper;
         }
-        public Task CreateProduto(ProdutoCreateDTO produto)
+        public async Task<ProdutoReadDTO> CreateProduto(ProdutoCreateDTO produtoDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Produto produto = _mapper.Map<Produto>(produtoDto);
+                await _context.Produtos.AddAsync(produto);
+                await _context.SaveChangesAsync();
+
+                ProdutoReadDTO produtoReadDTO = _mapper.Map<ProdutoReadDTO>(produto);
+                return produtoReadDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task DeleteProduto(Guid id)
+        public async Task<bool> DeleteProduto(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Produto produto = await _context.Produtos.Where(x => x.IdProduto == id).FirstOrDefaultAsync();
+                if (produto == null)
+                    return false;
+                
+                _context.Produtos.Remove(produto);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<IEnumerable<ProdutoReadDTO>> GetAllProducts()
@@ -53,21 +78,22 @@ namespace StoreProject.Services
             }
         }
 
-        public async Task<bool> SaveChanges()
+        public async Task<bool> UpdateProduto(ProdutoUpdateDTO produtoDto)
         {
             try
             {
-                return (await _context.SaveChangesAsync() >= 0);
+                Produto produto = await _context.Produtos.Where(x => x.IdProduto == produtoDto.IdProduto).FirstOrDefaultAsync();
+                if (produto == null)
+                    return false;
+
+                _mapper.Map(produtoDto, produto);
+                await _context.SaveChangesAsync();
+                return true;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        public Task UpdateProduto(ProdutoCreateDTO produto)
-        {
-            throw new NotImplementedException();
         }
     }
 }

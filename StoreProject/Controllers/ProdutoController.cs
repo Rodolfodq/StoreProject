@@ -32,6 +32,13 @@ namespace StoreProject.Controllers
             return NotFound("Produto não encontrado!");
         }
 
+        [HttpGet("GetProductByName")]
+        public async Task<IActionResult> GetProductByName(string name)
+        {
+            IEnumerable<ProdutoReadDTO> produtos = await _produtoApplicationServices.GetProductByName(name);
+            return Ok(produtos);
+        }
+
         [HttpPost("CreateProduct")]
         public async Task<IActionResult> CreateProduct(ProdutoCreateDTO produto)
         {

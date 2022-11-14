@@ -95,5 +95,18 @@ namespace StoreProject.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<IEnumerable<ProdutoReadDTO>> GetProductByName(string name)
+        {
+            try
+            {
+                IEnumerable<Produto> produtos = await _context.Produtos.Where(x => x.Nome.Contains(name)).ToListAsync();
+                return _mapper.Map<IEnumerable<ProdutoReadDTO>>(produtos);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

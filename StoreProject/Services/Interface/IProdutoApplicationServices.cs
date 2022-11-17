@@ -1,6 +1,6 @@
 ﻿using StoreProject.DTO;
 
-namespace StoreProject.Services
+namespace StoreProject.Services.Interface
 {
     public interface IProdutoApplicationServices
     {

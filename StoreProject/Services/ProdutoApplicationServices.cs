@@ -3,17 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using StoreProject.Data;
 using StoreProject.DTO;
 using StoreProject.Model;
+using StoreProject.Repositories.Interface;
+using StoreProject.Services.Interface;
 
 namespace StoreProject.Services
 {
     public class ProdutoApplicationServices : IProdutoApplicationServices
     {
-        private readonly AppDbContext _context;
+        private readonly IProdutoRepository _repository;
         private readonly IMapper _mapper;
 
-        public ProdutoApplicationServices(AppDbContext context, IMapper mapper)
+        public ProdutoApplicationServices(IProdutoRepository repository, IMapper mapper)
         {
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
         public async Task<ProdutoReadDTO> CreateProduto(ProdutoCreateDTO produtoDto)
@@ -21,8 +23,8 @@ namespace StoreProject.Services
             try
             {
                 Produto produto = _mapper.Map<Produto>(produtoDto);
-                await _context.Produtos.AddAsync(produto);
-                await _context.SaveChangesAsync();
+                await _repository.Add(produto);
+                await _repository.SaveChanges();
 
                 ProdutoReadDTO produtoReadDTO = _mapper.Map<ProdutoReadDTO>(produto);
                 return produtoReadDTO;
@@ -36,13 +38,8 @@ namespace StoreProject.Services
         public async Task<bool> DeleteProduto(int id)
         {
             try
-            {
-                Produto produto = await _context.Produtos.Where(x => x.IdProduto == id).FirstOrDefaultAsync();
-                if (produto == null)
-                    return false;
-                
-                _context.Produtos.Remove(produto);
-                await _context.SaveChangesAsync();
+            {                
+                await _repository.Remove(id);
                 return true;
             }
             catch (Exception ex)
@@ -55,7 +52,7 @@ namespace StoreProject.Services
         {
             try
             {
-                IEnumerable<Produto> produtos = await _context.Produtos.ToListAsync();
+                IEnumerable<Produto> produtos = await _repository.GetAll();
 
                 return _mapper.Map<IEnumerable<ProdutoReadDTO>>(produtos);
             }
@@ -69,7 +66,7 @@ namespace StoreProject.Services
         {
             try
             {
-                Produto produto = await _context.Produtos.Where(x => x.IdProduto == id).FirstOrDefaultAsync();
+                Produto produto = await _repository.GetById(id);
                 return _mapper.Map<ProdutoReadDTO>(produto);
             }
             catch (Exception ex)
@@ -82,12 +79,12 @@ namespace StoreProject.Services
         {
             try
             {
-                Produto produto = await _context.Produtos.Where(x => x.IdProduto == id).FirstOrDefaultAsync();
+                Produto produto = await _repository.GetById(id);
                 if (produto == null)
                     return false;
 
                 _mapper.Map(produtoDto, produto);
-                await _context.SaveChangesAsync();
+                await _repository.Update(produto);
                 return true;
             }
             catch (Exception ex)
@@ -100,7 +97,7 @@ namespace StoreProject.Services
         {
             try
             {
-                IEnumerable<Produto> produtos = await _context.Produtos.Where(x => x.Nome.Contains(name)).ToListAsync();
+                IEnumerable<Produto> produtos = await _repository.Search(x => x.Nome.Contains(name)).ToListAsync();
                 return _mapper.Map<IEnumerable<ProdutoReadDTO>>(produtos);
             }
             catch (Exception ex)

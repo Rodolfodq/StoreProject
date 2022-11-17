@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreProject.DTO;
-using StoreProject.Services;
+using StoreProject.Services.Interface;
 
 namespace StoreProject.Controllers
 {

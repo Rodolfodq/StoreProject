@@ -8,9 +8,10 @@ namespace StoreProject.Profiles
     {
         public ProdutosProfile()
         {
-            CreateMap<Produto, ProdutoReadDTO>();
-            CreateMap<ProdutoCreateDTO, Produto>();
-            CreateMap<ProdutoUpdateDTO, Produto>();
+            CreateMap<Produto, ProdutoReadDTO>().ForMember(
+                dest => dest.IdProduto, opt => opt.MapFrom(src => src.Id)
+                ).ReverseMap();
+            CreateMap<ProdutoUpdateDTO, Produto>().ReverseMap();
         }
     }
 }

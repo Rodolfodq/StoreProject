@@ -10,8 +10,8 @@ using StoreProject.Data;
 namespace StoreProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221111233201_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221118001103_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace StoreProject.Migrations
 
             modelBuilder.Entity("StoreProject.Model.Produto", b =>
                 {
-                    b.Property<int>("IdProduto")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -49,7 +49,7 @@ namespace StoreProject.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
 
-                    b.HasKey("IdProduto");
+                    b.HasKey("Id");
 
                     b.ToTable("Produtos");
                 });

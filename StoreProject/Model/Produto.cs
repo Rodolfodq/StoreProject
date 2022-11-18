@@ -3,7 +3,7 @@
 namespace StoreProject.Model
 {
     public class Produto : Entity
-    {        
+    {
         [StringLength(150)]
         public string Nome { get; set; }
         public string Imagem { get; set; }

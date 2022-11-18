@@ -12,6 +12,7 @@ namespace StoreProject.Profiles
                 dest => dest.IdProduto, opt => opt.MapFrom(src => src.Id)
                 ).ReverseMap();
             CreateMap<ProdutoUpdateDTO, Produto>().ReverseMap();
+            CreateMap<ProdutoCreateDTO, Produto>().ReverseMap();
         }
     }
 }
